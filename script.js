@@ -31,7 +31,20 @@ function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
+function getSeparators() {
+  const SEPARATORS = [
+    "-",
+    " <- ",
+    " == ",
+    " = ",
+    " <-> ",
+    " -> "
+  ]
+  return SEPARATORS
+}
+function pickSeparator() {
+  return pick(getSeparators())
+}
 
 function getSeedWords() {
   const SEED_WORDS = [
@@ -48,10 +61,10 @@ function getSeedWords() {
 }
 
 
-function getHybridWord(arr) {
+function getHybridWord(arr,separator="-") {
   const part1 = pick(arr)
   const part2 = pick(arr)
-  return `${part1}-${part2}`
+  return `${part1}${separator}${part2}`
 }
 
 function getHybridWords(n=3, arr=[]) {
@@ -61,14 +74,22 @@ function getHybridWords(n=3, arr=[]) {
   }
   return words
 }
+function getSeparatorWords(n=3, arr=[]) {
+  const words = []
+  for (var i=0; i<n; i++) {
+    words.push(getHybridWord(arr, pickSeparator()))
+  }
+  return words
+}
 
 function getStringArray(n=3, str=" ") {
   return new Array(n).fill(str);
 }
 
 function createTextElement(text, classes="text-element") {
-    const textElement = u('<p>').addClass(classes).text(text)
-    return textElement
+  const container = u('<div>').addClass(classes)  
+  const textElement = u('<p>').text(text)
+  return container.append(textElement)
 }
 
 function getInterval() {
@@ -79,14 +100,18 @@ function getInterval() {
 function init() {
   let singleSeedWord = ''
   let seedWords = []
+  let separator = pickSeparator()
   
   function change() {
+    
     // 1. get seed words
     seedWords = getSeedWords()
    // X. Add gaps to seed words
     seedWords = seedWords.concat(getStringArray(3, " "))
     // X. Add hybrid-words
-    seedWords = seedWords.concat(getHybridWords(3, seedWords))
+    // seedWords = seedWords.concat(getHybridWords(3, seedWords))
+    // X. Add separator words
+    seedWords = seedWords.concat(getSeparatorWords(6, seedWords))
     // X. Shuffle array
     shuffle(seedWords)
     // X. Pick one word
