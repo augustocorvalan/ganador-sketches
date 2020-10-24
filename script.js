@@ -1,5 +1,32 @@
 const Body = u('body')
 
+
+
+
+
+
+
+var shuffle = function (array) {
+
+	var currentIndex = array.length;
+	var temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
+
+};
+
 function getSeedWords() {
   const SEED_WORDS = [
     "carne",
@@ -12,6 +39,10 @@ function getSeedWords() {
     "flesh",
   ]
   return SEED_WORDS
+}
+
+function getStringArray(n=3, str=" ") {
+  return new Array(n).fill(str);
 }
 
 function createTextElement(text, classes="text-element") {
@@ -29,7 +60,13 @@ function init() {
   let seedWords = []
   
   function change() {
+    // 1. get seed words
     seedWords = getSeedWords()
+   // X. Add gaps to seed words
+    seedWords = seedWords.concat(getStringArray())
+    // X. Shuffle array
+    shuffle(seedWords)
+    // X. Pick one word
     singleSeedWord = seedWords[0]
     
     draw()
