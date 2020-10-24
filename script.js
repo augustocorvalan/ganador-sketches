@@ -2,7 +2,14 @@ const Body = u('body')
 
 function getSeedWords() {
   const SEED_WORDS = [
-    "carne"
+    "carne",
+    "carne",
+    "ganado",
+    "ganador",
+    "gains",
+    "cattle",
+    "meat",
+    "flesh",
   ]
   return SEED_WORDS
 }
@@ -29,8 +36,13 @@ function init() {
   }
   
   function draw() {
-    const TextElement = createTextElement(singleSeedWord, 'seed-word')  
-    Body.append(TextElement)
+    // 1. seed word
+    const TextElement = createTextElement(singleSeedWord, 'seed-word')
+    // Body.append(TextElement)
+    
+    // 2. Many seed elements
+    const SeedElements = (word) => createTextElement(word, 'seed-word')
+    Body.append(SeedElements, seedWords)
   }
   
 
