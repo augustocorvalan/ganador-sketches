@@ -91,8 +91,11 @@ function init() {
     shuffle(seedWords)
     // X. Pick one word
     singleSeedWord = seedWords[0]
-    
-    draw()
+
+    // Render- once
+    // draw()
+    // Render- in an interval
+    setInterval(draw, getInterval())
   }
   
   function draw() {
@@ -102,7 +105,13 @@ function init() {
     
     // 2. Many seed elements
     const SeedElements = (word) => createTextElement(word, 'seed-word')
-    Body.append(SeedElements, seedWords)
+    // Body.append(SeedElements, seedWords)
+    
+    // 3. One element at a time
+    if (seedWords) {
+      const NewSeedElement = createTextElement(seedWords.pop(), 'seed-word')
+      Body.append(NewSeedElement, seedWords)
+    }
   }
   
 
