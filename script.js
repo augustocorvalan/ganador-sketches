@@ -23,7 +23,7 @@ function init() {
   
   function change() {
     seedWords = getSeedWords()
-    singleSeedWord = seedWords()[0]
+    singleSeedWord = seedWords[0]
     
     draw()
   }
